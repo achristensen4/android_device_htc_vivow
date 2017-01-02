@@ -92,16 +92,10 @@ service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
 #   user wifi
 #   group wifi inet keystore
     socket wpa_eth0 dgram 660 wifi wifi
-    disabled
-    oneshot
-
+    
 service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
-    disabled
-    oneshot
 
 service iprenew_eth0 /system/bin/dhcpcd -n
-    disabled
-    oneshot
 
 # compass/accelerometer daemon
 service akmd /system/bin/akmd
@@ -110,32 +104,23 @@ service akmd /system/bin/akmd
 
 # bugreport is triggered by the KEY_VOLUMEUP and BTN_MOUSE keycodes
 service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
-    disabled
-    oneshot
     keycodes 114 115
 
 service hciattach /system/bin/brcm_patchram_plus --enable_hci --enable_lpm \
     --baudrate 3000000 --patchram /etc/firmware/bcm4329.hcd /dev/ttyHS0
     user bluetooth
     group bluetooth net_bt_admin
-    disabled
 
 service udhcpd /system/bin/udhcpd
-    disabled
-    oneshot
 
 service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p13 /dev/block/mmcblk0p14
     user root
 
 service htc_ebdlogd /system/bin/htc_ebdlogd -s -k -P 7
     user root
-    disabled
-    oneshot
 
 service htc_ebdlogd_rel /system/bin/htc_ebdlogd -s -k
     user root
-    disabled
-    oneshot
 
 on property:ro.build.tags=test-keys
     start htc_ebdlogd
